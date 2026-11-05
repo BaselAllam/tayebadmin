@@ -9,6 +9,7 @@ import LoadingSpinner from "../LoadingSpinner";
 import ErrorMessage from "../ErrorMsg";
 import NotGuestRoute from "@/contexts/NotGuestRoute";
 import { Guard, modulesKeys } from "@/contexts/PermGurad";
+import logo from '@/assets/LogoTrans.png';
 
 type NavLeaf = { to: string; labelKey: TKey; icon: ReactNode; moduleName: string };
 
@@ -52,23 +53,15 @@ function NavItem({ item, onNavigate }: { item: NavLeaf; onNavigate?: (() => void
 
 function SidebarContent({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
   const { t } = useI18n();
-  const location = useLocation();
-  const pathname = location.pathname;
-  const [packagesOpen, setPackagesOpen] = useState(pathname.startsWith("/packages"));
-
-  useEffect(() => {
-    if (pathname.startsWith("/packages")) setPackagesOpen(true);
-  }, [pathname]);
 
   return (
     <div className="flex h-full flex-col gap-6 bg-sidebar p-4 text-sidebar-foreground">
       <div className="flex items-center gap-3 px-1">
-        <span className="flex size-10 items-center justify-center rounded-xl bg-sidebar-primary text-sidebar-primary-foreground">
-          <Compass className="size-5" />
+        <span className="flex size-10 items-center justify-center rounded-xl text-sidebar-primary-foreground">
+          <img src={logo} alt="Logo" className="size-5" />
         </span>
         <div className="min-w-0">
           <p className="truncate font-display text-base font-semibold">{t("app.name")}</p>
-          <p className="truncate text-xs text-sidebar-foreground/70">{t("app.subtitle")}</p>
         </div>
       </div>
 

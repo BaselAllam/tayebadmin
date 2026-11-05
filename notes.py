@@ -8,6 +8,7 @@ Products
 Stock
 Reviews
 SiteCore
+Expenses
 MyProfile
 
 

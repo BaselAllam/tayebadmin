@@ -40,14 +40,7 @@ const App = () => (
           <Sonner />
           <DataProvider>
             <Routes>
-              <Route
-                path="/login"
-                element={
-                  <GuestRoute>
-                    <LoginPage />
-                  </GuestRoute>
-                }
-              />
+              <Route path="/login" element={ <GuestRoute> <LoginPage /> </GuestRoute> } />
               <Route element={<AdminShell />}>
                 <Route path="/" element={<DashboardPage />} />
                 <Route path="/users" element={<UsersPage />} />

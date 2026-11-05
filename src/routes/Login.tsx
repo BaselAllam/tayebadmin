@@ -16,7 +16,7 @@ const DOT_PATTERN =
 
 const LoginPage = () => {
   const { t } = useI18n();
-  const { success, error, warning, info, toast } = useSimpleToast();
+  const { error } = useSimpleToast();
   const navigate = useNavigate();
   const { login } = useAuth();
   const [phone, setPhone] = useState('');
