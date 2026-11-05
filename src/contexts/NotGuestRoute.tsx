@@ -11,10 +11,10 @@ interface NotGuestRouteProps {
 const NotGuestRoute = ({ children, module }: NotGuestRouteProps) => {
   const { isAuthenticated, user } = useAuth();
 
-  if (!isAuthenticated) {
-    window.location.href = '/login';
-    return null;
-  }
+  // if (!isAuthenticated) {
+  //   window.location.href = '/login';
+  //   return null;
+  // }
 
   if (user && user.user_role !== 'admin' && adminModules.includes(module)) {
     return <Navigate to="/" replace />;

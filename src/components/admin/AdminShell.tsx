@@ -1,5 +1,5 @@
 import { NavLink, Link, useLocation, Outlet, matchPath } from "react-router-dom";
-import { ChevronDown, Compass, LayoutDashboard, Layers, Languages, Menu, Package, Ticket, UserRound, Users, ActivityIcon, Layers2, LayoutTemplate } from "lucide-react";
+import { Compass, LayoutDashboard, Layers, Languages, Menu, UserRound, Users } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -16,17 +16,6 @@ const mainNav: NavLeaf[] = [
   { to: "/", labelKey: "nav.dashboard", icon: <LayoutDashboard className="size-4" />, moduleName: modulesKeys.Dashboard },
   { to: "/users", labelKey: "nav.users", icon: <Users className="size-4" />, moduleName: modulesKeys.Users },
   { to: "/site-cores", labelKey: "nav.siteCores", icon: <Layers className="size-4" />, moduleName: modulesKeys.SiteCore },
-  { to: "/activities", labelKey: "nav.activities", icon: <ActivityIcon className="size-4" />, moduleName: modulesKeys.Activities },
-  { to: "/cms", labelKey: "nav.cms", icon: <Layers2 className="size-4" />, moduleName: modulesKeys.CMS },
-];
-
-const packagesNav: NavLeaf[] = [
-  { to: "/packages", labelKey: "nav.packagesList", icon: <Package className="size-4" />, moduleName: modulesKeys.Packages },
-  { to: "/packages/types", labelKey: "nav.packageTypes", icon: <Compass className="size-4" />, moduleName: modulesKeys.Packages },
-  { to: "/packages/bookings", labelKey: "nav.bookings", icon: <Ticket className="size-4" />, moduleName: modulesKeys.Packages },
-  { to: "/packages/benefits", labelKey: "nav.benefits", icon: <LayoutTemplate className="size-4" />, moduleName: modulesKeys.Packages },
-  { to: "/packages/itineraries", labelKey: "nav.itineraries", icon: <LayoutTemplate className="size-4" />, moduleName: modulesKeys.Packages },
-  { to: "/packages/highlights", labelKey: "nav.highlights", icon: <LayoutTemplate className="size-4" />, moduleName: modulesKeys.Packages },
 ];
 
 const profileNav: NavLeaf = {
@@ -36,7 +25,7 @@ const profileNav: NavLeaf = {
   moduleName: modulesKeys.Users
 };
 
-const allRoutesConfig = [...mainNav, ...packagesNav, profileNav];
+const allRoutesConfig = [...mainNav, profileNav];
 
 function NavItem({ item, onNavigate }: { item: NavLeaf; onNavigate?: (() => void) | undefined }) {
   const { t } = useI18n();
@@ -89,26 +78,6 @@ function SidebarContent({ onNavigate }: { onNavigate?: (() => void) | undefined 
             <NavItem item={item} onNavigate={onNavigate} />
           </Guard>
         ))}
-
-        <button
-          type="button"
-          onClick={() => setPackagesOpen((v) => !v)}
-          aria-expanded={packagesOpen}
-          className="mt-1 flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/85 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-        >
-          <Package className="size-4" />
-          <span className="flex-1 text-start">{t("nav.packages")}</span>
-          <ChevronDown
-            className={`size-4 transition-transform ${packagesOpen ? "rotate-180" : ""}`}
-          />
-        </button>
-        {packagesOpen ? (
-          <div className="ms-4 flex flex-col gap-1 border-s border-sidebar-border ps-2">
-            {packagesNav.map((item) => (
-              <NavItem key={item.to} item={item} onNavigate={onNavigate} />
-            ))}
-          </div>
-        ) : null}
 
         <div className="mt-2">
           <NavItem item={profileNav} onNavigate={onNavigate} />

@@ -4,7 +4,7 @@ export type Lang = "en" | "ar";
 
 const dict = {
   en: {
-    "app.name": "Origini",
+    "app.name": "Tayeb",
     "app.subtitle": "Admin Console",
     "nav.dashboard": "Dashboard",
     "nav.users": "Users",
@@ -334,7 +334,7 @@ const dict = {
     'field.isHoly': 'Related to Holy Land?',
   },
   ar: {
-    "app.name": "اوريجيني",
+    "app.name": "طيب",
     "app.subtitle": "لوحة التحكم",
     "nav.dashboard": "الرئيسية",
     "nav.users": "المستخدمون",

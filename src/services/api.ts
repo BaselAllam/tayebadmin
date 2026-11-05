@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://api.origini.co.uk',
+  baseURL: 'https://api.tayebfragrance.com',
   // baseURL: 'http://127.0.0.1:8000',
   timeout: 10000,
   headers: {
@@ -12,7 +12,7 @@ const api = axios.create({
 
 const baseUrl = api.defaults.baseURL;
 
-export const imgUrl = 'https://api.origini.co.uk'
+export const imgUrl = 'https://api.tayebfragrance.com'
 // export const imgUrl = 'http://127.0.0.1:8000'
 
 api.interceptors.request.use(

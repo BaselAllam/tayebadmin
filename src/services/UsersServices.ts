@@ -11,18 +11,6 @@ export interface UserActivitiesModel {
   made_at: string;
 }
 
-export const getUsersActivities = async (user_id?: string, action?: string): Promise<UserActivitiesModel[]> => {
-  try {
-    const response = await api.get<UserActivitiesModel[]>(`/admin_apis/users/activities/?user_id=${user_id}&action=${action}`);
-    return response.data['data'];
-    } catch (e) {
-    if (axios.isAxiosError(e)) {
-        const message = e.response.data['data'];
-    }
-    throw new Error("Unexpected error occurred");
-    }
-};
-
 export const setUsersPassword = async (formData) => {
   const response = await api.post(`/admin_apis/users/set_user_password/`, formData);
   return response;

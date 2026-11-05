@@ -9,20 +9,12 @@ import { AdminShell } from "./components/admin/AdminShell";
 import NotFoundComponent from "./routes/NotFound";
 import UsersPage from "./routes/users";
 import SiteCoresPage from "./routes/site-cores";
-import PackagesPage from "./routes/packages";
-import PackageTypesPage from "./routes/packagestypes";
-import BookingsPage from "./routes/packages.bookings";
 import ProfilePage from "./routes/profile";
 import { DataProvider } from "./lib/data-store";
 import GuestRoute from "./contexts/GuestRoute";
 import LoginPage from "./routes/Login";
 import { AuthProvider } from "./contexts/AuthContext";
 import { SimpleToastProvider } from "./components/ui/toaster";
-import ActivitiesPage from "./routes/activities";
-import CmsPage from "./routes/cms";
-import { HighlightsPageTemplates } from "./routes/PackageHighlightsTemplates";
-import { BenefitsTemplatesPage } from "./routes/PackageBenefitsTemplates";
-import { ItineraryTemplatesPage } from "./routes/PackageItineraryTemplates";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -60,15 +52,7 @@ const App = () => (
                 <Route path="/" element={<DashboardPage />} />
                 <Route path="/users" element={<UsersPage />} />
                 <Route path="/site-cores" element={<SiteCoresPage />} />
-                <Route path="/packages" element={<PackagesPage />} />
-                <Route path="/packages/types" element={<PackageTypesPage />} />
-                <Route path="/packages/bookings" element={<BookingsPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/activities" element={<ActivitiesPage />} />
-                <Route path="/cms" element={<CmsPage />} />
-                <Route path="/packages/highlights" element={<HighlightsPageTemplates />} />
-                <Route path="/packages/benefits" element={<BenefitsTemplatesPage />} />
-                <Route path="/packages/itineraries" element={<ItineraryTemplatesPage />} />
               </Route>
               <Route path="*" element={<NotFoundComponent />} />
             </Routes>
