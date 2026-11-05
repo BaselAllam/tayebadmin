@@ -16,6 +16,7 @@ import LoginPage from "./routes/Login";
 import { AuthProvider } from "./contexts/AuthContext";
 import { SimpleToastProvider } from "./components/ui/toaster";
 import ReviewsPage from "./routes/Reviewspage";
+import ExpensesPage from "./routes/Expenses";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,6 +48,7 @@ const App = () => (
                 <Route path="/users" element={<UsersPage />} />
                 <Route path="/site-cores" element={<SiteCoresPage />} />
                 <Route path="/reviews" element={<ReviewsPage />} />
+                <Route path="/expenses" element={<ExpensesPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
               </Route>
               <Route path="*" element={<NotFoundComponent />} />
