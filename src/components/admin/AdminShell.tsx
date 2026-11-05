@@ -1,6 +1,6 @@
 import { NavLink, Link, useLocation, Outlet, matchPath } from "react-router-dom";
-import { Compass, LayoutDashboard, Layers, Languages, Menu, UserRound, Users } from "lucide-react";
-import { useEffect, useState, type ReactNode } from "react";
+import { LayoutDashboard, Layers, Languages, Menu, UserRound, Users } from "lucide-react";
+import { useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useI18n, type TKey } from "@/lib/i18n";
@@ -8,22 +8,20 @@ import { useGetUserData } from "@/hooks/useSiteData";
 import LoadingSpinner from "../LoadingSpinner";
 import ErrorMessage from "../ErrorMsg";
 import NotGuestRoute from "@/contexts/NotGuestRoute";
-import { Guard, modulesKeys } from "@/contexts/PermGurad";
 import logo from '@/assets/LogoTrans.png';
 
-type NavLeaf = { to: string; labelKey: TKey; icon: ReactNode; moduleName: string };
+type NavLeaf = { to: string; labelKey: TKey; icon: ReactNode };
 
 const mainNav: NavLeaf[] = [
-  { to: "/", labelKey: "nav.dashboard", icon: <LayoutDashboard className="size-4" />, moduleName: modulesKeys.Dashboard },
-  { to: "/users", labelKey: "nav.users", icon: <Users className="size-4" />, moduleName: modulesKeys.Users },
-  { to: "/site-cores", labelKey: "nav.siteCores", icon: <Layers className="size-4" />, moduleName: modulesKeys.SiteCore },
+  { to: "/", labelKey: "nav.dashboard", icon: <LayoutDashboard className="size-4" /> },
+  { to: "/users", labelKey: "nav.users", icon: <Users className="size-4" /> },
+  { to: "/site-cores", labelKey: "nav.siteCores", icon: <Layers className="size-4" /> },
 ];
 
 const profileNav: NavLeaf = {
   to: "/profile",
   labelKey: "nav.profile",
-  icon: <UserRound className="size-4" />,
-  moduleName: modulesKeys.Users
+  icon: <UserRound className="size-4" />
 };
 
 const allRoutesConfig = [...mainNav, profileNav];
@@ -67,9 +65,7 @@ function SidebarContent({ onNavigate }: { onNavigate?: (() => void) | undefined 
 
       <nav className="flex flex-1 flex-col gap-1 overflow-y-auto">
         {mainNav.map((item) => (
-          <Guard key={item.to} module={item.moduleName}>
             <NavItem item={item} onNavigate={onNavigate} />
-          </Guard>
         ))}
 
         <div className="mt-2">
@@ -89,8 +85,6 @@ export function AdminShell({ }: { }) {
   const currentRoute = allRoutesConfig.find((item) =>
     matchPath({ path: item.to, end: item.to === "/" || item.to === "/packages" }, location.pathname)
   );
-
-  const activeModule = currentRoute?.moduleName ?? "";
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -143,7 +137,7 @@ export function AdminShell({ }: { }) {
 
         <main className="flex-1 p-4 sm:p-6">
           <div className="mx-auto w-full max-w-7xl space-y-6">
-            <NotGuestRoute module={activeModule}>
+            <NotGuestRoute >
               <Outlet />
             </NotGuestRoute>
           </div>

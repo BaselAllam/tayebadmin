@@ -1,6 +1,7 @@
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useGetUserData } from "@/hooks/useSiteData";
 import api from "@/services/api";
+import { UserAddressModel } from "@/services/UsersServices";
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 export interface UserProfileModel {
@@ -11,9 +12,9 @@ export interface UserProfileModel {
   user_status: string;
   gender: string;
   last_login: string;
-  user_role: string;
+  is_staff: boolean;
   date_joined: string;
-  nationality: string;
+  user_addresses: UserAddressModel[];
 }
 
 type AuthContextType = {
@@ -86,7 +87,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = async () => {
     try {
     const refresh_token = localStorage.getItem("refresh_token");
-      await api.post("admin_apis/users/logout/", { refresh_token });
+      await api.post("/admin_apis/users/logout/", { refresh_token });
     } catch (error) {
       console.error("Logout error:", error);
     } finally {

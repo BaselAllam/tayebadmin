@@ -9,7 +9,8 @@ import { useGetContactUs, useGetFaqs } from "@/hooks/useSiteData";
 import { useSimpleToast } from "@/components/ui/toaster";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import ErrorMessage from "@/components/ErrorMsg";
-import { createFaqs, updateContactUs, updateFaqs } from "@/services/CoreServices";
+import { createFaqs, FaqsModel, updateContactUs, updateFaqs } from "@/services/CoreServices";
+import CitiesTab from "./CitiesTab";
 
 const contactTone: Record<ContactStatus, string> = {
   new: "warning",
@@ -28,6 +29,7 @@ export default function SiteCoresPage() {
         <TabsList className="flex h-auto w-full flex-wrap justify-start gap-1">
           <TabsTrigger value="contact">{t("cores.tab.contact")}</TabsTrigger>
           <TabsTrigger value="faqs">{t("cores.tab.faqs")}</TabsTrigger>
+          <TabsTrigger value="cities">{t("cores.tab.cities")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="contact" className="space-y-4">
@@ -35,6 +37,9 @@ export default function SiteCoresPage() {
         </TabsContent>
         <TabsContent value="faqs" className="space-y-4">
           <FaqTab />
+        </TabsContent>
+         <TabsContent value="cities" className="space-y-4">
+          <CitiesTab />
         </TabsContent>
       </Tabs>
     </>
@@ -175,9 +180,9 @@ function ContactTab() {
 
 const emptyFaq = {
   faq_title: "",
-  faq_title_de: "",
+  faq_title_ar: "",
   faq_description: "",
-  faq_description_de: "",
+  faq_description_ar: "",
   is_archived: false,
 };
 
@@ -191,9 +196,9 @@ function FaqTab() {
   const {data: faqs, isLoading: isFaqsLoading, error: isFaqsError, refetch} = useGetFaqs();
   const { success, error, toast } = useSimpleToast();
 
-  const columns: Column<Faq>[] = [
+  const columns: Column<FaqsModel>[] = [
     { key: "title", header: t("field.faqTitle"), cell: (f) => <span className="font-medium">{f.faq_title}</span> },
-    { key: "titleAr", header: t("field.faqTitleAr"), cell: (f) => f.faq_title_de },
+    { key: "titleAr", header: t("field.faqTitleAr"), cell: (f) => f.faq_title_ar },
     {
       key: "desc",
       header: t("field.faqDescription"),
@@ -228,9 +233,9 @@ function FaqTab() {
       const faq = faqs.find((x) => x.id === editingId);
       formData.append('id', editingId);
       if (form.faq_title !== faq.faq_title) formData.append('faq_title', form.faq_title);
-      if (form.faq_title_de !== faq.faq_title_de) formData.append('faq_title_de', form.faq_title_de);
+      if (form.faq_title_ar !== faq.faq_title_ar) formData.append('faq_title_ar', form.faq_title_ar);
       if (form.faq_description !== faq.faq_description) formData.append('faq_description', form.faq_description);
-      if (form.faq_description_de !== faq.faq_description_de) formData.append('faq_description_de', form.faq_description_de);
+      if (form.faq_description_ar !== faq.faq_description_ar) formData.append('faq_description_ar', form.faq_description_ar);
       if (form.is_archived !== faq.is_archived) formData.append('is_archived', String(form.is_archived));
       try {
         const res = await updateFaqs(formData as any);
@@ -275,9 +280,9 @@ function FaqTab() {
           setEditingId(f.id);
           setForm({
             faq_title: f.faq_title,
-            faq_title_de: f.faq_title_de,
+            faq_title_ar: f.faq_title_ar,
             faq_description: f.faq_description,
-            faq_description_de: f.faq_description_de,
+            faq_description_ar: f.faq_description_ar,
             is_archived: f.is_archived,
           });
           setOpen(true);
@@ -297,9 +302,9 @@ function FaqTab() {
       >
         <div className="grid gap-4 sm:grid-cols-2">
           <TextField label={t("field.faqTitle")} value={form.faq_title} onChange={(v) => set({ faq_title: v })} />
-          <TextField label={t("field.faqTitleAr")} value={form.faq_title_de} onChange={(v) => set({ faq_title_de: v })} />
+          <TextField label={t("field.faqTitleAr")} value={form.faq_title_ar} onChange={(v) => set({ faq_title_ar: v })} />
           <TextAreaField label={t("field.faqDescription")} value={form.faq_description} onChange={(v) => set({ faq_description: v })} />
-          <TextAreaField label={t("field.faqDescriptionAr")} value={form.faq_description_de} onChange={(v) => set({ faq_description_de: v })} />
+          <TextAreaField label={t("field.faqDescriptionAr")} value={form.faq_description_ar} onChange={(v) => set({ faq_description_ar: v })} />
           <div className="sm:col-span-2">
             <SwitchField label={t("field.isArchived")} checked={form.is_archived} onChange={(v) => set({ is_archived: v })} />
           </div>

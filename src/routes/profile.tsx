@@ -1,4 +1,4 @@
-import { LogOut, Pencil, Phone, ShieldCheck, UserRound } from "lucide-react";
+import { LogOut, Pencil, Phone, UserRound } from "lucide-react";
 import { useState } from "react";
 import { PageHeader, SelectField, StatusPill, TextField } from "@/components/admin/kit";
 import { Button } from "@/components/ui/button";
@@ -11,10 +11,10 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import ErrorMessage from "@/components/ErrorMsg";
 import { updateUserData } from "@/services/AuthService";
 import { useSimpleToast } from "@/components/ui/toaster";
-
-export const NATIONALITY_KEYS = ['EGY', 'SAU', 'UAE', 'USA', 'GBR', 'DEU', 'FRA', 'ITA', 'ESP', 'CAN', 'AUS', 'IND', 'PAK', 'CHN', 'JPN', 'BRA', 'TUR', 'JOR', 'KWT', 'QAT'] as const;
+import { useNavigate } from "react-router-dom";
 
 export default function ProfilePage() {
+  const navigate = useNavigate();
   const { t } = useI18n();
   const { data: user, isLoading: isGetUserLoading, error: isGetUserError, refetch } = useGetUserData();
   const [editing, setEditing] = useState(false);
@@ -23,15 +23,15 @@ export default function ProfilePage() {
     last_name: user?.last_name ?? "",
     phone: user?.phone ?? "",
     gender: (user?.gender ?? "male") as Gender,
-    nationality: user?.nationality ?? "",
   });
   const [isSaving, setIsSaving] = useState(false);
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
   const { logout } = useAuth();
   const { success, error, warning, info, toast } = useSimpleToast();
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login", { replace: true });
     setShowLogoutDialog(false);
   };
 
@@ -86,7 +86,6 @@ export default function ProfilePage() {
           </span>
           <p className="mt-3 text-lg font-semibold">{`${user?.first_name} ${user?.last_name}`}</p>
           <div className="mt-2 flex justify-center gap-2">
-            <StatusPill label={user?.user_role} tone="info" />
             <StatusPill label={user?.user_status} tone="success" />
           </div>
           <div className="mt-5 space-y-2 text-start text-sm">
@@ -95,9 +94,6 @@ export default function ProfilePage() {
             </p>
             <p className="flex items-center gap-2 text-muted-foreground">
               <UserRound className="size-4" /> {user?.gender}
-            </p>
-            <p className="flex items-center gap-2 text-muted-foreground">
-              <ShieldCheck className="size-4" /> {user?.user_role}
             </p>
             <button className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-red-50 transition-colors text-start group" onClick={() => setShowLogoutDialog(true)}>
               <div className="w-7 h-7 rounded-xl bg-red-50 flex items-center justify-center shrink-0 group-hover:bg-red-100 transition-colors">
@@ -136,15 +132,6 @@ export default function ProfilePage() {
                     { value: "other", label: t("gender.other") },
                   ]}
                 />
-                <SelectField
-                  label={t("field.nationality")}
-                  value={form.nationality}
-                  onChange={(v) => set({ nationality: v as typeof NATIONALITY_KEYS[number] })}
-                  options={NATIONALITY_KEYS.map((key) => ({
-                    value: key,
-                    label: t(`${key}`),
-                  }))}
-                />
               </div>
               <div className="flex gap-2">
                 <Button type="submit">{t("action.save")}</Button>
@@ -160,9 +147,7 @@ export default function ProfilePage() {
                 [t("field.lastName"), user?.last_name],
                 [t("field.phone"), user?.phone],
                 [t("field.gender"), user?.gender],
-                [t("field.role"), user?.user_role],
                 [t("field.userStatus"), user?.user_status],
-                [t("field.nationality"), user?.nationality],
               ].map(([label, value]) => (
                 <div key={label} className="rounded-lg bg-muted/50 px-3 py-2.5">
                   <dt className="text-xs uppercase tracking-wide text-muted-foreground">{label}</dt>

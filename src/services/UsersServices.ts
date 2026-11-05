@@ -1,18 +1,37 @@
 import { UserProfileModel } from "@/contexts/AuthContext";
 import api from "@/services/api";
 import axios from "axios";
+import { AreaModel } from "./CoreServices";
 
-export interface UserActivitiesModel {
+export interface UserAddressModel {
   id: string;
-  action: string;
-  module: string;
-  details: string;
-  made_by: UserProfileModel;
-  made_at: string;
+  area: AreaModel;
+  street_name: string;
+  apartment_number: number;
+  flat_number: number;
 }
 
-export const setUsersPassword = async (formData) => {
-  const response = await api.post(`/admin_apis/users/set_user_password/`, formData);
+export const updateUsersAddress = async (formData) => {
+  const response = await api.patch(`/admin_apis/users/user_addresses/`, formData, {headers: {
+    'Content-Type': 'multipart/form-data',
+  },});
+  return response;
+};
+
+export const createUserAddress = async (formData: {
+  user_id: string;
+  area_id: string;
+  street_name: string;
+  apartment_number: number;
+  flat_number: number;
+}) => {
+  const data = new FormData();
+  data.append("user_id", formData.user_id);
+  data.append("area_id", formData.area_id);
+  data.append("street_name", formData.street_name);
+  data.append("apartment_number", formData.apartment_number.toString());
+  data.append("flat_number", formData.flat_number.toString());
+  const response = await api.post("/admin_apis/users/user_addresses/", data);
   return response;
 };
 
@@ -41,8 +60,6 @@ export const createUser = async (formData: {
   phone: string;
   user_status: string;
   gender: string;
-  user_role: string;
-  nationality: string;
 }) => {
   const data = new FormData();
   data.append("first_name", formData.first_name);
@@ -50,8 +67,6 @@ export const createUser = async (formData: {
   data.append("phone", formData.phone);
   data.append("user_status", formData.user_status);
   data.append("gender", formData.gender);
-  data.append("user_role", formData.user_role);
-  data.append("nationality", formData.nationality);
   const response = await api.post("/admin_apis/users/users/", data);
   return response;
 };

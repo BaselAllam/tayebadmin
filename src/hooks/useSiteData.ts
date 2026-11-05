@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getUserData } from '@/services/AuthService';
 import { getAllUsersData } from '@/services/UsersServices';
-import { getContactUs, getFaqs } from '@/services/CoreServices';
+import { getCities, getContactUs, getFaqs } from '@/services/CoreServices';
 import { getDashboard } from '@/services/DashboardServices';
 
 
@@ -35,6 +35,13 @@ export const useGetFaqs = () => {
   return useQuery({
     queryKey: ['faqs'],
     queryFn: getFaqs
+  });
+};
+
+export const useGetCities = () => {
+  return useQuery({
+    queryKey: ['cities'],
+    queryFn: getCities
   });
 };
 
