@@ -3,6 +3,7 @@ import { getUserData } from '@/services/AuthService';
 import { getAllUsersData } from '@/services/UsersServices';
 import { getCities, getContactUs, getFaqs } from '@/services/CoreServices';
 import { getDashboard } from '@/services/DashboardServices';
+import { getOurReviews } from '@/services/ReviewsServices';
 
 
 export const useGetUserData = () => {
@@ -49,5 +50,12 @@ export const useGetDashboard = () => {
   return useQuery({
     queryKey: ['dashboard'],
     queryFn: getDashboard
+  });
+};
+
+export const useGetOurReviews = () => {
+  return useQuery({
+    queryKey: ['ourReviews'],
+    queryFn: getOurReviews
   });
 };
