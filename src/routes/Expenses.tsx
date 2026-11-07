@@ -133,6 +133,7 @@ export default function ExpensesPage() {
         ...form,
         qty: Number(form.qty) || 0,
         expense_amount: Number(form.expense_amount) || 0,
+        unit_type: form.unit_type || "",
       });
       if (res.status === 201) {
         await refetch();
@@ -157,6 +158,7 @@ export default function ExpensesPage() {
     if (form.item !== expense.item) formData.append("item", form.item);
     if (Number(form.qty) !== Number(expense.qty)) formData.append("qty", String(Number(form.qty) || 0));
     if (Number(form.expense_amount) !== Number(expense.expense_amount)) formData.append("expense_amount", String(Number(form.expense_amount) || 0));
+    if (form.unit_type !== (expense.unit_type ?? "")) formData.append("unit_type", form.unit_type);
     if (form.notes !== (expense.notes ?? "")) formData.append("notes", form.notes);
     if (form.purchase_date !== expense.purchase_date?.slice(0, 10)) formData.append("purchase_date", form.purchase_date);
     if (form.purchased_by !== expense.purchased_by?.id) formData.append("purchased_by", form.purchased_by);
