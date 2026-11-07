@@ -49,10 +49,10 @@ export const useGetCities = () => {
   });
 };
 
-export const useGetDashboard = () => {
+export const useGetDashboard = (range) => {
   return useQuery({
     queryKey: ['dashboard'],
-    queryFn: getDashboard
+    queryFn: () => getDashboard(range)
   });
 };
 
