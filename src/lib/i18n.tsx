@@ -395,6 +395,11 @@ const dict = {
     "field.contactPersonName": "Contact person name",
     "field.contactPersonPhone": "Contact person phone",
     "field.contactPersonPosition": "Contact person position",
+    "cores.tab.categories": "Product categories",
+    "categories.requiredFields": "Category name is required.",
+    "field.categoryName": "Category name",
+    "field.categoryNameAr": "Category name (Arabic)",
+    "field.image": "Image",
   },
   ar: {
     "app.name": "طيب",
@@ -788,6 +793,11 @@ const dict = {
     "field.contactPersonName": "اسم الشخص المسؤول",
     "field.contactPersonPhone": "هاتف الشخص المسؤول",
     "field.contactPersonPosition": "منصب الشخص المسؤول",
+    "cores.tab.categories": "تصنيفات المنتجات",
+    "categories.requiredFields": "اسم التصنيف مطلوب.",
+    "field.categoryName": "اسم التصنيف",
+    "field.categoryNameAr": "اسم التصنيف (عربي)",
+    "field.image": "الصورة",
   },
 } satisfies Record<Lang, Record<string, string>>;
 

@@ -11,6 +11,7 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import ErrorMessage from "@/components/ErrorMsg";
 import { createFaqs, FaqsModel, updateContactUs, updateFaqs } from "@/services/CoreServices";
 import CitiesTab from "./CitiesTab";
+import ProductCategoriesTab from "./ProductsCategoriesTab";
 
 const contactTone: Record<ContactStatus, string> = {
   new: "warning",
@@ -30,6 +31,7 @@ export default function SiteCoresPage() {
           <TabsTrigger value="contact">{t("cores.tab.contact")}</TabsTrigger>
           <TabsTrigger value="faqs">{t("cores.tab.faqs")}</TabsTrigger>
           <TabsTrigger value="cities">{t("cores.tab.cities")}</TabsTrigger>
+          <TabsTrigger value="categories">{t("cores.tab.categories")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="contact" className="space-y-4">
@@ -41,6 +43,9 @@ export default function SiteCoresPage() {
          <TabsContent value="cities" className="space-y-4">
           <CitiesTab />
         </TabsContent>
+        <TabsContent value="categories" className="space-y-4">
+        <ProductCategoriesTab />
+      </TabsContent>
       </Tabs>
     </>
   );
