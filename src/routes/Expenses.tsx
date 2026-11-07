@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useI18n } from "@/lib/i18n";
-import { useGetAllUsers, useGetExpenses } from "@/hooks/useSiteData";
+import { useGetAllUsers, useGetExpenses, useGetSuppliers } from "@/hooks/useSiteData";
 import { useSimpleToast } from "@/components/ui/toaster";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import ErrorMessage from "@/components/ErrorMsg";
@@ -20,13 +20,15 @@ const emptyExpense = {
   qty: "1",
   expense_amount: "",
   notes: "",
+  unit_type: "",
   purchase_date: today(),
   purchased_by: "",
+  supplier: '',
   is_archived: false,
-  purchase_receipt: null as File | string | null, // existing image URL (string) or a newly picked File
+  purchase_receipt: null as File | string | null,
 };
 
-/* Image picker: keeps the picked File itself (no base64). A string value is the existing image URL. */
+
 function ReceiptField({
   label,
   value,
@@ -38,7 +40,6 @@ function ReceiptField({
 }) {
   const preview = useMemo(() => (value instanceof File ? URL.createObjectURL(value) : value || ""), [value]);
 
-  // free the temporary blob URL when the file changes / the dialog unmounts
   useEffect(() => {
     return () => {
       if (preview.startsWith("blob:")) URL.revokeObjectURL(preview);
@@ -71,7 +72,8 @@ export default function ExpensesPage() {
   const { t } = useI18n();
   const { success, error } = useSimpleToast();
   const { data: expenses, isLoading, error: isError, refetch } = useGetExpenses();
-  const { data: users } = useGetAllUsers(); // for the "purchased by" select
+  const { data: suppliers } = useGetSuppliers();
+  const { data: users } = useGetAllUsers();
 
   const [open, setOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -79,7 +81,6 @@ export default function ExpensesPage() {
   const set = (patch: Partial<typeof emptyExpense>) => setForm((f) => ({ ...f, ...patch }));
   const [isCreateUpdateLoading, setIsCreateUpdateLoading] = useState(false);
 
-  // staff first; fall back to everyone if no user is flagged as staff
   const purchaserOptions = useMemo(() => {
     const staff = (users ?? []).filter((u) => u.is_staff);
     return (staff.length ? staff : users ?? []).map((u) => ({
@@ -88,7 +89,6 @@ export default function ExpensesPage() {
     }));
   }, [users]);
 
-  // newest purchase first
   const rows = useMemo(
     () => [...(expenses ?? [])].sort((a, b) => (b.purchase_date ?? "").localeCompare(a.purchase_date ?? "")),
     [expenses],
@@ -218,11 +218,13 @@ export default function ExpensesPage() {
             setForm({
               item: e.item,
               qty: String(e.qty ?? ""),
+              unit_type: e.unit_type ?? "",
               expense_amount: String(e.expense_amount ?? ""),
               notes: e.notes ?? "",
               purchase_date: e.purchase_date?.slice(0, 10) ?? today(),
               purchased_by: e.purchased_by?.id ?? "",
               is_archived: e.is_archived,
+              supplier: e.supplier?.id ?? "",
               purchase_receipt: `${imgUrl}${e.purchase_receipt}` || null,
             });
             setOpen(true);
@@ -243,8 +245,10 @@ export default function ExpensesPage() {
       >
         <div className="grid gap-4 sm:grid-cols-2 [&>*]:min-w-0">
           <TextField label={t("field.item")} value={form.item} onChange={(v) => set({ item: v })} />
+          <SelectField label={t("field.supplier")} value={form.supplier} onChange={(v) => set({ supplier: v })} options={suppliers?.map((s) => ({ label: s.supplier_name, value: s.id })) ?? []} />
           <SelectField label={t("field.purchasedBy")} value={form.purchased_by} onChange={(v) => set({ purchased_by: v })} options={purchaserOptions} />
           <TextField label={t("field.qty")} type="number" value={form.qty} onChange={(v) => set({ qty: v })} />
+          <TextField label={t("field.unitType")} value={form.unit_type} onChange={(v) => set({ unit_type: v })} />
           <TextField label={t("field.expenseAmount")} type="number" value={form.expense_amount} onChange={(v) => set({ expense_amount: v })} />
           <TextField label={t("field.purchaseDate")} type="date" value={form.purchase_date} onChange={(v) => set({ purchase_date: v })} />
           <div className="flex items-end">

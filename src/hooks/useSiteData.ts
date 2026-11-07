@@ -5,6 +5,7 @@ import { getCities, getContactUs, getFaqs } from '@/services/CoreServices';
 import { getDashboard } from '@/services/DashboardServices';
 import { getOurReviews } from '@/services/ReviewsServices';
 import { getExpenses } from '@/services/ExpensesServices';
+import { getSuppliers } from '@/services/SuppliersServices';
 
 
 export const useGetUserData = () => {
@@ -65,5 +66,12 @@ export const useGetExpenses = () => {
   return useQuery({
     queryKey: ['expenses'],
     queryFn: getExpenses
+  });
+};
+
+export const useGetSuppliers = () => {
+  return useQuery({
+    queryKey: ['suppliers'],
+    queryFn: getSuppliers
   });
 };

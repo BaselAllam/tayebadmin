@@ -18,6 +18,7 @@ const mainNav: NavLeaf[] = [
   { to: "/site-cores", labelKey: "nav.siteCores", icon: <Layers className="size-4" /> },
   { to: "/reviews", labelKey: "nav.reviews", icon: <Star className="size-4" /> },
   { to: "/expenses", labelKey: "nav.expenses", icon: <DollarSign className="size-4" /> },
+  { to: "/suppliers", labelKey: "nav.suppliers", icon: <Layers className="size-4" /> },
 ];
 
 const profileNav: NavLeaf = {

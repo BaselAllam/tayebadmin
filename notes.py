@@ -7,7 +7,6 @@ Stock
 
 
 Reviews
-Expenses
 
 
 '''
