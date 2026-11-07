@@ -161,6 +161,7 @@ export default function ExpensesPage() {
     if (form.unit_type !== (expense.unit_type ?? "")) formData.append("unit_type", form.unit_type);
     if (form.notes !== (expense.notes ?? "")) formData.append("notes", form.notes);
     if (form.purchase_date !== expense.purchase_date?.slice(0, 10)) formData.append("purchase_date", form.purchase_date);
+    if (form.supplier !== expense.supplier?.id) formData.append("supplier", form.supplier);
     if (form.purchased_by !== expense.purchased_by?.id) formData.append("purchased_by", form.purchased_by);
     if (form.is_archived !== expense.is_archived) formData.append("is_archived", String(form.is_archived));
     if (form.purchase_receipt && form.purchase_receipt !== expense.purchase_receipt) {

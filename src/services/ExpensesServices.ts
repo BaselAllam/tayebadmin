@@ -51,6 +51,7 @@ export const updateExpenses = async (formData) => {
 };
 
 export const createExpenses = async (formData: {
+  supplier: string;
   item: string;
   qty: number;
   expense_amount: number;
@@ -62,6 +63,7 @@ export const createExpenses = async (formData: {
   purchase_receipt: File | string | null;
 }) => {
   const data = new FormData();
+  data.append("supplier", formData.supplier);
   data.append("item", formData.item);
   data.append("qty", String(formData.qty));
   data.append("expense_amount", String(formData.expense_amount));
