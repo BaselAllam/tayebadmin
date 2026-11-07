@@ -1,5 +1,5 @@
 import { NavLink, Link, useLocation, Outlet, matchPath } from "react-router-dom";
-import { LayoutDashboard, Layers, Languages, Menu, UserRound, Users, Star, DollarSign } from "lucide-react";
+import { LayoutDashboard, Layers, Languages, Menu, UserRound, Users, Star, DollarSign, Store } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -14,6 +14,7 @@ type NavLeaf = { to: string; labelKey: TKey; icon: ReactNode };
 
 const mainNav: NavLeaf[] = [
   { to: "/", labelKey: "nav.dashboard", icon: <LayoutDashboard className="size-4" /> },
+  { to: "/products", labelKey: "nav.products", icon: <Store className="size-4" /> },
   { to: "/users", labelKey: "nav.users", icon: <Users className="size-4" /> },
   { to: "/site-cores", labelKey: "nav.siteCores", icon: <Layers className="size-4" /> },
   { to: "/reviews", labelKey: "nav.reviews", icon: <Star className="size-4" /> },

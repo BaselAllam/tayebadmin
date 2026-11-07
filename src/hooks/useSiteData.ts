@@ -6,7 +6,7 @@ import { getDashboard } from '@/services/DashboardServices';
 import { getOurReviews } from '@/services/ReviewsServices';
 import { getExpenses } from '@/services/ExpensesServices';
 import { getSuppliers } from '@/services/SuppliersServices';
-import { getProductCategories } from '@/services/ProductsServices';
+import { getProductCategories, getProducts } from '@/services/ProductsServices';
 
 
 export const useGetUserData = () => {
@@ -81,5 +81,12 @@ export const useGetProductsCategories = () => {
   return useQuery({
     queryKey: ['products-categories'],
     queryFn: getProductCategories
+  });
+};
+
+export const useGetProducts = () => {
+  return useQuery({
+    queryKey: ['products'],
+    queryFn: getProducts
   });
 };

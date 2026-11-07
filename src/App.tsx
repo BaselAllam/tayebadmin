@@ -18,6 +18,7 @@ import { SimpleToastProvider } from "./components/ui/toaster";
 import ReviewsPage from "./routes/Reviewspage";
 import ExpensesPage from "./routes/Expenses";
 import SuppliersPage from "./routes/Suppliers";
+import ProductsPage from "./routes/Products";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -46,6 +47,7 @@ const App = () => (
               <Route path="/login" element={ <GuestRoute> <LoginPage /> </GuestRoute> } />
               <Route element={<AdminShell />}>
                 <Route path="/" element={<DashboardPage />} />
+                <Route path="/products" element={<ProductsPage />} />
                 <Route path="/users" element={<UsersPage />} />
                 <Route path="/site-cores" element={<SiteCoresPage />} />
                 <Route path="/reviews" element={<ReviewsPage />} />
