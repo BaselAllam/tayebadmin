@@ -4,7 +4,6 @@ import axios from "axios";
 export interface SuppliersModel {
     id: string,
     supplier_name: string,
-    supplier_email: string,
     supplier_phone: string,
     supplier_address: string,
     contact_person_name: string,
@@ -35,7 +34,6 @@ export const updateSuppliers = async (formData) => {
 
 export const createSuppliers = async (formData: {
   supplier_name: string;
-  supplier_email: string;
   supplier_phone: string;
   supplier_address: string;
   contact_person_name: string;
@@ -44,7 +42,6 @@ export const createSuppliers = async (formData: {
 }) => {
   const data = new FormData();
   data.append("supplier_name", formData.supplier_name);
-  data.append("supplier_email", formData.supplier_email);
   data.append("supplier_phone", formData.supplier_phone);
   data.append("supplier_address", formData.supplier_address);
   data.append("contact_person_name", formData.contact_person_name);

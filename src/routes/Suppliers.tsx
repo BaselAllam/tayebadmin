@@ -14,7 +14,6 @@ import { createSuppliers, updateSuppliers, type SuppliersModel } from "@/service
 
 const emptySupplier = {
   supplier_name: "",
-  supplier_email: "",
   supplier_phone: "",
   supplier_address: "",
   contact_person_name: "",
@@ -41,7 +40,7 @@ export default function SuppliersPage() {
     const q = query.trim().toLowerCase();
     if (!q) return suppliers;
     return suppliers?.filter((s) =>
-      `${s.supplier_name} ${s.supplier_email} ${s.supplier_phone} ${s.contact_person_name} ${s.contact_person_phone}`
+      `${s.supplier_name} ${s.supplier_phone} ${s.contact_person_name} ${s.contact_person_phone}`
         .toLowerCase()
         .includes(q),
     );
@@ -49,7 +48,6 @@ export default function SuppliersPage() {
 
   const columns: Column<SuppliersModel>[] = [
     { key: "name", header: t("field.supplierName"), cell: (s) => <span className="font-medium">{s.supplier_name}</span> },
-    { key: "email", header: t("field.supplierEmail"), cell: (s) => s.supplier_email },
     { key: "phone", header: t("field.supplierPhone"), cell: (s) => <span dir="ltr">{s.supplier_phone}</span> },
     {
       key: "address",
@@ -151,7 +149,6 @@ export default function SuppliersPage() {
             setEditingId(s.id);
             setForm({
               supplier_name: s.supplier_name ?? "",
-              supplier_email: s.supplier_email ?? "",
               supplier_phone: s.supplier_phone ?? "",
               supplier_address: s.supplier_address ?? "",
               contact_person_name: s.contact_person_name ?? "",
@@ -177,7 +174,6 @@ export default function SuppliersPage() {
         <div className="grid gap-4 sm:grid-cols-2 [&>*]:min-w-0">
           <h4 className="text-sm font-semibold sm:col-span-2">{t("suppliers.sectionSupplier")}</h4>
           <TextField label={t("field.supplierName")} value={form.supplier_name} onChange={(v) => set({ supplier_name: v })} />
-          <TextField label={t("field.supplierEmail")} type="email" value={form.supplier_email} onChange={(v) => set({ supplier_email: v })} />
           <div className="space-y-1.5">
             <Label>{t("field.supplierPhone")}</Label>
             <PhoneInput
